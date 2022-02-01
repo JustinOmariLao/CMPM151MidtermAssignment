@@ -11,6 +11,8 @@ public class Game_Script : MonoBehaviour
     public GameObject pauseUI;
     public GameObject gameUI;
 
+    public GameObject soundHandler;
+    SoundScript sound;
     public TMP_Text waveText; // UI for Wave Count
     public TMP_Text newWaveText; //UI for new Wave
     public TMP_Text killText; // UI for Kill Count
@@ -25,7 +27,8 @@ public class Game_Script : MonoBehaviour
 
     void Start()
     {
-
+        sound = soundHandler.GetComponent<SoundScript>();
+    
     }
 
     // Update is called once per frame
@@ -56,6 +59,8 @@ public class Game_Script : MonoBehaviour
                 killText.text = "Kill Counter: " + killCounter;
                 beginWave = 4f;
                 gameStart = true;
+                sound.sendCommand((int)waveLevel);
+                sound.zombieSound();
             }
         }
 
@@ -65,10 +70,14 @@ public class Game_Script : MonoBehaviour
             beginWave -= Time.deltaTime;
             newWaveText.text = "New Wave arriving in ... " + beginWave;
             if (beginWave < 0) {
+                sound.zombieSound();
                 print("New Wave Begin");
                 beginWave = 4f;
                 baseKills = baseKills + (int)(5 * waveLevel);
                 waveCooldown = true;
+                if (waveLevel <= 4) {
+                    sound.sendCommand((int)waveLevel);
+                }
             }
 
             if (waveCooldown == true) {
@@ -89,8 +98,8 @@ public class Game_Script : MonoBehaviour
     // CREATES EACH WAVE, ZOMBIE SPAWN = 5 * WAVELEVEL
     public void createWave(float waveLevel) {
         waveText.text = "Wave " + waveLevel;
-
         for (int i = 0; i < (5 * waveLevel); i++) {
+
             var spawnPoint = Random.Range(1, 5);
             switch(spawnPoint) {
                 case 1:

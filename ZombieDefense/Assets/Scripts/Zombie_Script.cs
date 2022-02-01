@@ -9,6 +9,7 @@ public class Zombie_Script : MonoBehaviour
 
     private GameObject player;
 
+
     // Start is called before the first frame update
     void Start()
     {
