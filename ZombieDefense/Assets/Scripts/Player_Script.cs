@@ -10,6 +10,14 @@ public class Player_Script : MonoBehaviour
 
     public TMP_Text killText; // UI for Kill Count
 
+    public GameObject soundHandler;
+    SoundScript sound;
+
+    void Start()
+    {
+        sound = soundHandler.GetComponent<SoundScript>();
+    }
+
     // Update is called once per frame
     void Update()
     {   
@@ -23,6 +31,7 @@ public class Player_Script : MonoBehaviour
         controller.Move(movement * speed * Time.deltaTime);
 
         if (Input.GetMouseButtonDown(0)) {
+            sound.sendCommand(7);
             RaycastHit hit;
             if (Physics.Raycast(this.transform.position, this.transform.TransformDirection(Vector3.forward), out hit, 10000)) {
                 if (hit.transform.gameObject.name == "Zombie(Clone)") {

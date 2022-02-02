@@ -332,6 +332,7 @@ MonoBehaviour:
   speed: 10
   rotationSpeed: 0
   killText: {fileID: 656775733}
+  soundHandler: {fileID: 2086664618}
 --- !u!143 &413278031
 CharacterController:
   m_ObjectHideFlags: 0
